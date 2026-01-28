@@ -1,4 +1,5 @@
 from db_config import get_db_connection
+import datetime
 
 getOutStock = '''SELECT
 	d.strReferencia,
@@ -29,14 +30,25 @@ cursor = connection.cursor()
 cursor.execute(getOutStock)
 
 rows = cursor.fetchall()
-with open(f'{listName}.txt', 'w', encoding='utf-8') as list:
+fecha_str = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+with open(f'{listName}.md', 'w', encoding='utf-8') as list_file:
+    list_file.write(f"# Reporte de Inventario\n")
+    list_file.write(f"**Fecha:** {fecha_str}\n\n")
+    list_file.write("| Referencia | Descripción | Cantidad |\n")
+    list_file.write("| :--- | :--- | :--- |\n")
+
     for row in rows:
         reference = row.strReferencia
-
         cursor.execute(gettProduct(reference)) 
         product_data = cursor.fetchone()
 
-        list.write(f"Referencia: {product_data.strReferencia} Descripcion: {product_data.strDescripcion} Cantidad: {product_data.intCantidad}\n")
+        if product_data:
+            ref = product_data.strReferencia
+            desc = product_data.strDescripcion
+            cant = f"{product_data.intCantidad:.2f}"
+            
+            list_file.write(f"| {ref} | {desc} | {cant} |\n")
 
 cursor.close()
 connection.close()
