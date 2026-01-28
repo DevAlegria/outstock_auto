@@ -14,7 +14,7 @@ WHERE p.dtFecha_Compra >= DATEADD(HOUR, -1, GETDATE())
 ORDER BY p.dtFecha_Compra DESC'''
 
 def gettProduct(reference):
-    return """SELECT
+    return f"""SELECT
 	strReferencia,
 	strCodigo,
 	strDescripcion,
