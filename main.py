@@ -13,22 +13,29 @@ INNER JOIN tblDetallePOS d
 WHERE p.dtFecha_Compra >= DATEADD(HOUR, -1, GETDATE())
 ORDER BY p.dtFecha_Compra DESC'''
 
-getProduct = """SELECT
+def gettProduct(reference):
+    return """SELECT
 	strReferencia,
 	strCodigo,
 	strDescripcion,
 	intCantidadMinimaAviso,
 	intCantidad,
 	strIdProveedor
-FROM tblInventario where strReferencia = '9903907014068'"""
+    FROM tblInventario where strReferencia = '{reference}'"""
 
 connection = get_db_connection()
 cursor = connection.cursor()
 cursor.execute(getOutStock)
 
-for row in cursor:
+rows = cursor.fetchall()
+
+for row in rows:
     reference = row.strReferencia
-    product = connection.cursor()
-    product.execute(getProduct).fetchone()
-    print(product)
-    print(row)
+    
+    cursor.execute(gettProduct(reference)) 
+    product_data = cursor.fetchone()
+    
+    print("Datos del Producto:", product_data)
+
+cursor.close()
+connection.close()
