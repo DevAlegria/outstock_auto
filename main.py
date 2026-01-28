@@ -35,7 +35,7 @@ for row in rows:
     cursor.execute(gettProduct(reference)) 
     product_data = cursor.fetchone()
     
-    print("Datos del Producto:", product_data)
+    print("Datos del Producto:", product_data.strDescripcion, product_data.intCantidad)
 
 cursor.close()
 connection.close()
