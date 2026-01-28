@@ -45,10 +45,11 @@ with open(f'{listName}.md', 'w', encoding='utf-8') as list_file:
 
         if product_data:
             ref = product_data.strReferencia
+            cod = product_data.strCodigo
             desc = product_data.strDescripcion
             cant = f"{product_data.intCantidad:.2f}"
-            
-            list_file.write(f"| {ref} | {desc} | {cant} |\n")
+
+            list_file.write(f"| {ref} | {cod} | {desc} | {cant} |\n")
 
 cursor.close()
 connection.close()
