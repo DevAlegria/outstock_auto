@@ -24,7 +24,7 @@ def gettProduct(reference):
 	strIdProveedor
     FROM tblInventario where strReferencia = '{reference}'"""
 
-listName = 'Agotados hoy'
+listName = 'reporte_agotados'
 connection = get_db_connection()
 cursor = connection.cursor()
 cursor.execute(getOutStock)
@@ -33,10 +33,10 @@ rows = cursor.fetchall()
 fecha_str = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
 with open(f'{listName}.md', 'w', encoding='utf-8') as list_file:
-    list_file.write(f"# Reporte de Inventario\n")
+    list_file.write(f"# Reporte de Agotados\n")
     list_file.write(f"**Fecha:** {fecha_str}\n\n")
-    list_file.write("| Referencia | Descripción | Cantidad |\n")
-    list_file.write("| :--- | :--- | :--- |\n")
+    list_file.write("| Referencia | Código | Descripción | Cantidad |\n")
+    list_file.write("| :--- | :--- | :--- | :--- |\n")
 
     for row in rows:
         reference = row.strReferencia
