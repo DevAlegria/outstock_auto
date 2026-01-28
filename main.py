@@ -23,19 +23,20 @@ def gettProduct(reference):
 	strIdProveedor
     FROM tblInventario where strReferencia = '{reference}'"""
 
+listName = 'Agotados hoy'
 connection = get_db_connection()
 cursor = connection.cursor()
 cursor.execute(getOutStock)
 
 rows = cursor.fetchall()
+with open(f'{listName}.txt', 'w', encoding='utf-8') as list:
+    for row in rows:
+        reference = row.strReferencia
 
-for row in rows:
-    reference = row.strReferencia
-    
-    cursor.execute(gettProduct(reference)) 
-    product_data = cursor.fetchone()
-    
-    print("Datos del Producto:", product_data.strDescripcion, product_data.intCantidad)
+        cursor.execute(gettProduct(reference)) 
+        product_data = cursor.fetchone()
+
+        list.write(f"Referencia: {product_data.strReferencia} Descripcion: {product_data.strDescripcion} Cantidad: {product_data.intCantidad}\n")
 
 cursor.close()
 connection.close()
