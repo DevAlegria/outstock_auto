@@ -6,7 +6,7 @@ username = 'sa'
 password = 'sa'
 connection_string = f'DRIVER={{SQL Server}};SERVER={server};DATABASE={database};UID={username};PWD={password}'
 
-def get_db_connection():
+def getDbConnection():
     try:
         connection = pyodbc.connect(connection_string)
         return connection
@@ -14,6 +14,6 @@ def get_db_connection():
         print("Error connecting to database: ", e)
         return None
     
-def close_db_connection(connection):
+def closeDbConnection(connection):
     if connection:
         connection.close()
