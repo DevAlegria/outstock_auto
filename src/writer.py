@@ -10,7 +10,8 @@ class ReportWriter:
 
   def _initialize_file(self):
     file_exists = os.path.exists(self.filename)
-    headers_line = f"| {' | '.join(self.column_headers)} |\n"
+    bold_headers = [f"**{col}**" for col in self.column_headers]
+    headers_line = f"| {' | '.join(bold_headers)} |\n"
     
     should_create_headers = True
 
@@ -19,13 +20,13 @@ class ReportWriter:
         first_line = f.readline()
         content = f.read()
         if headers_line in [first_line] or headers_line in content:
-            should_create_headers = False
-            print(f"📂 File '{self.filename}' already exists with correct headers. Skipping initialization.")
+          should_create_headers = False
+          print(f"📂 File '{self.filename}' already exists with correct headers. Skipping initialization.")
 
     if should_create_headers:
       with open(self.filename, 'w', encoding='utf-8') as f:
-        f.write(f"# Report: {self.filename.replace('.md', '')}\n")
-        f.write(f"**Generated on:** {self.timestamp}\n\n")
+        f.write(f"## {self.filename.replace('.md', '')}\n")
+        f.write(f"**Date:** {self.timestamp}\n \n")
         
         separator = " | ".join([":---"] * len(self.column_headers))
         
