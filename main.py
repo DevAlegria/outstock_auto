@@ -6,7 +6,7 @@ def main():
     conn = getDbConnection()
     cursor = conn.cursor()
     sifacPOS = SifacPOS(cursor)
-    reporter = ReportWriter('sales_report', ['Reference','Description'])
+    reporter = ReportWriter('sales_report', ['Referencia','Codigo','Descripcion', 'Cantidad'])
 
     latestSales = sifacPOS.getLatestSales()
 
@@ -17,7 +17,9 @@ def main():
         if productDetails:
             row = [
                 productDetails.strReferencia,
-                productDetails.strDescripcion
+                productDetails.strCodigo,
+                productDetails.strDescripcion,
+                sale.intCantidad
             ]
             reporter.append_row(row)
 
