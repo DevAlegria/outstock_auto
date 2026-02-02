@@ -19,7 +19,7 @@ def main():
                 productDetails.strReferencia,
                 productDetails.strCodigo,
                 productDetails.strDescripcion,
-                sale.intCantidad
+                productDetails.intCantidad
             ]
             reporter.append_row(row)
 
