@@ -42,3 +42,15 @@ class ReportWriter:
     
     with open(self.filename, 'a', encoding='utf-8') as f:
       f.write(f"| {formatted_row} |\n")
+  def isReference(self, reference):
+    if not os.path.exists(self.filename):
+        return False
+    
+    target = str(reference).strip()
+    
+    with open(self.filename, 'r', encoding='utf-8') as f:
+        for line in f:
+            cells = [cell.strip() for cell in line.split('|')]
+            if target in cells:
+                return True
+    return False
