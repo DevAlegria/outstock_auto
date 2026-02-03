@@ -14,7 +14,7 @@ def main():
 
     for sale in latestSales:
         reference = sale.strReferencia
-        if listOutStock.get(reference):
+        if listOutStock.get(reference) or reporter.isReference(reference):
             continue
 
         productDetails = sifacPOS.getProductDetails(reference)
